@@ -1,0 +1,8 @@
+# Change to location of all raw .fastq (or .fastq.gz) files
+raw_data: /vortexfs1/omics/huber/shu/qc-trim/raw_data
+
+# Change to output directory (on HPC, use your scratch(
+scratch:  /vortexfs1/scratch/sarahhu
+
+# Change to output directory to eventually move all trimmed reads to
+outputDIR: /vortexfs1/omics/huber/shu/qc-trim
