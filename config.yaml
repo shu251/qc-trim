@@ -1,8 +1,11 @@
 # Change to location of all raw .fastq (or .fastq.gz) files
 raw_data: /vortexfs1/omics/huber/shu/qc-trim/raw_data
 
-# Change to output directory (on HPC, use your scratch(
+# Change to output directory (on HPC, use your scratch)
 scratch:  /vortexfs1/scratch/sarahhu
+
+# Add a project name, output files will be placed in a directory of this name in scratch
+proj_name: test-qc
 
 # Change to output directory to eventually move all trimmed reads to
 outputDIR: /vortexfs1/omics/huber/shu/qc-trim
