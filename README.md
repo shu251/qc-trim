@@ -39,16 +39,22 @@ outputDIR: /vortexfs1/omics/huber/shu/qc-trim
 
 ### _(3) Change parameters of Trimmomatic step_
 
-### _need to updated config file to input appropriate parameters_
+Update location of adapters for trimmomatic to use. Trimmomatic parameters are written into Snakefile, see line *67*.
+```
+adapters: [PATH TO ADAPTERS.fa]
+```
 
-
-### _(4) Execute dryrun of snakemake pipeline
+### _(4) Execute dryrun of snakemake pipeline_
 
 ```
 snakemake -np
 ```
 
+## _(5) Execute snakemake_
 
+```
+snakemake --use-conda
+```
 
 _to do_
 * change config to input parameters for trimmomatic
