@@ -9,3 +9,6 @@ proj_name: test-qc
 
 # Change to output directory to eventually move all trimmed reads to
 outputDIR: /vortexfs1/omics/huber/shu/qc-trim
+
+# Location of illumina adapters, full path
+adapters: /vortexfs1/omics/huber/db/adapters/illumina-adapters.fa

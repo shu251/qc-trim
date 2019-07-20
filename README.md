@@ -39,13 +39,20 @@ outputDIR: /vortexfs1/omics/huber/shu/qc-trim
 
 ### _(3) Change parameters of Trimmomatic step_
 
+### _need to updated config file to input appropriate parameters_
 
 
-* run Snakemake - note on how
+### _(4) Execute dryrun of snakemake pipeline
+
+```
+snakemake -np
+```
+
 
 
 _to do_
 * change config to input parameters for trimmomatic
+* include multiqc step
 * update to export a list of file names
 * Update to give warning if R1 and R2s do not match
 * update to move output trimmed and QC stats to an output directory
