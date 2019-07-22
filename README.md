@@ -50,15 +50,13 @@ adapters: [PATH TO ADAPTERS.fa]
 snakemake -np
 ```
 
-## _(5) Execute snakemake_
+### _(5) Execute snakemake_
 
 ```
 snakemake --use-conda
 ```
 
 _to do_
-* change config to input parameters for trimmomatic
-* include multiqc step
-* update to export a list of file names
-* Update to give warning if R1 and R2s do not match
-* update to move output trimmed and QC stats to an output directory
+* Update to export a list of file names - could be used for next pipeline?
+* Update to give warning if R1 and R2s do not match, or if one is missing!
+* Update to move output trimmed and QC stats to an output directory
