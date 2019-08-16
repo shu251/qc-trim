@@ -56,6 +56,25 @@ snakemake -np
 snakemake --use-conda
 ```
 
+### _(6) Run snakemake with SLURM_
+[Read about executing snakemake on a cluster](https://snakemake.readthedocs.io/en/stable/executable.html) and another explanation on how to execute with a submit script can be found [here](https://hpc-carpentry.github.io/hpc-python/17-cluster/).    
+Review the submit scripts available in ```submitscripts```. Files in this directory include another config file called ```cluster.yaml```, and two scripts to submit your snakemake pipeline to the cluster with and without the dry run option.   
+First, open and modify the ```cluster.yaml``` to fit your machine. Then test run using the provided submit scripts.
+```
+# Make sure you are still in the snake-tagseq conda environment
+bash submitscripts/submit-slurm-dry.sh
+```
+Outputs should all be green and will report how many jobs and rules snakemake plans to run. This will allow you to evaluate any error and syntax messages.  
+
+Once ready, use the submit-slurm.sh script to submit the jobs to slurm. Run with screen, tmux, or nohup.
+```
+bash submitscripts/submit-slurm.sh
+# This will print jobs submitted as it runs. Monitor these jobs using ```squeue```
+
+```
+
+
+
 _to do_
 * Update to export a list of file names - could be used for next pipeline?
 * Update to give warning if R1 and R2s do not match, or if one is missing!
