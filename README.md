@@ -23,6 +23,7 @@ To run this pipeline, we need to update the ```config.yaml``` file which will te
 * Move all fastq files to ```qc-trim/raw_data/``` directory **or** change the ```raw_data:``` line in the config file to the full path to your fastq files.
 * Since I am working on an HPC I use a scratch space to write output files. Change this scratch line to where your scratch directory is
 * Within my scratch directory, the output file will be placed in a new directory of this name. In the example below, all my output files will be placed in the directory ``` /vortexfs1/scratch/sarahhu/test-qc/```. This way my scratch directory will be organized as I run multiple projects.
+* Also change the location of where adapters for your study can be found for the trimmomatic step
 ```
 # Change to location of all raw .fastq (or .fastq.gz) files
 raw_data: /vortexfs1/omics/huber/shu/qc-trim/raw_data
@@ -35,28 +36,26 @@ proj_name: test-qc
 
 # Change to output directory to eventually move all trimmed reads to
 outputDIR: /vortexfs1/omics/huber/shu/qc-trim
+
+# Location of illumina adapters, full path
+adapters: /vortexfs1/omics/huber/db/adapters/illumina-adapters.fa
 ```
 
-### _(3) Change parameters of Trimmomatic step_
-
-Update location of adapters for trimmomatic to use. Trimmomatic parameters are written into Snakefile, see line *67*.
-```
-adapters: [PATH TO ADAPTERS.fa]
-```
-
-### _(4) Execute dryrun of snakemake pipeline_
+### _(3) Execute dryrun of snakemake pipeline_
 
 ```
 snakemake -np
+# The command 'snakemake' automatically looks for 'Snakefile'
 ```
 
-### _(5) Execute snakemake_
+### _(4) Execute snakemake_
 
 ```
 snakemake --use-conda
+# The '--use-conda' flag is necessary because we enable fastqc, trimmomatic, and multiqc conda environments
 ```
 
-### _(6) Run snakemake with SLURM_
+### _(5) Run snakemake with SLURM_
 [Read about executing snakemake on a cluster](https://snakemake.readthedocs.io/en/stable/executable.html) and another explanation on how to execute with a submit script can be found [here](https://hpc-carpentry.github.io/hpc-python/17-cluster/).    
 Review the submit scripts available in ```submitscripts```. Files in this directory include another config file called ```cluster.yaml```, and two scripts to submit your snakemake pipeline to the cluster with and without the dry run option.   
 First, open and modify the ```cluster.yaml``` to fit your machine. Then test run using the provided submit scripts.
@@ -73,9 +72,5 @@ bash submitscripts/submit-slurm.sh
 
 ```
 
-
-
-_to do_
-* Update to export a list of file names - could be used for next pipeline?
-* Update to give warning if R1 and R2s do not match, or if one is missing!
-* Update to move output trimmed and QC stats to an output directory
+***
+_Last updated 8-18-2019_
