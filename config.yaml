@@ -1,14 +1,25 @@
+# Parse file names
+## Specify .fastq file suffix, following the read pair designation
+# suffix: .fastq.gz
+suffix: _001.fastq.gz
+
+# Read pair designations
+#r1_suf: 1
+#r2_suf: 2
+r1_suf: R1
+r2_suf: R2
+
 # Change to location of all raw .fastq (or .fastq.gz) files
-raw_data: /vortexfs1/omics/huber/shu/qc-trim/raw_data
+raw_data: /vortexfs1/omics/huber/data/18s-midcaymanrise-gordacones-2021-06-28
 
 # Change to output directory (on HPC, use your scratch)
 scratch:  /vortexfs1/scratch/sarahhu
 
 # Add a project name, output files will be placed in a directory of this name in scratch
-proj_name: test-qc
+proj_name: mcr-qc
 
 # Change to output directory to eventually move all trimmed reads to
-outputDIR: /vortexfs1/omics/huber/shu/qc-trim
+outputDIR: /vortexfs1/omics/huber/shu/18S-mcr2021-GRcones/trimmed-reads
 
 # Location of illumina adapters, full path
 adapters: /vortexfs1/omics/huber/db/adapters/illumina-adapters.fa

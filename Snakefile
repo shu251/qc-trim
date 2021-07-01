@@ -15,13 +15,23 @@ SCRATCH = config["scratch"]
 SCRATCH_PROJ = os.path.join(SCRATCH, PROJ)
 OUTPUTDIR = config["outputDIR"]
 
+SUF = config["suffix"]
+R1_SUF = str(config["r1_suf"])
+R2_SUF = str(config["r2_suf"])
+
 # Use glob statement to find all samples in 'raw_data' directory
-SAMPLE_LIST,NUMS = glob_wildcards(INPUTDIR + "/{sample}_{num}.fastq.gz")
+##rm### SAMPLE_LIST,NUMS = glob_wildcards(INPUTDIR + "/{sample}_L001_{num}.fastq.gz")
+
+## Wildcard '{num}' must be equivalent to 'R1' or '1', meaning the read pair designation.
+SAMPLE_LIST,NUMS = glob_wildcards(INPUTDIR + "/{sample}_{num}" + SUF)
+
 # Unique the output variables from glob_wildcards
 SAMPLE_SET = set(SAMPLE_LIST)
 SET_NUMS = set(NUMS)
 
 ADAPTERS = config["adapters"]
+
+
 
 #----DEFINE RULES----#
 
@@ -40,8 +50,9 @@ rule all:
     trim_stats = SCRATCH_PROJ + "/fastqc/trimmed_multiqc_general_stats.txt"
 
 rule fastqc:
-  input:    
-    INPUTDIR + "/{sample}_{num}.fastq.gz"
+  input:
+    INPUTDIR + "/{sample}_{num}" + SUF    
+    # INPUTDIR + "/{sample}_{num}.fastq.gz"
   output:
     html = SCRATCH_PROJ + "/fastqc/{sample}_{num}_fastqc.html",
     zip = SCRATCH_PROJ + "/fastqc/{sample}_{num}_fastqc.zip"
@@ -53,11 +64,15 @@ rule fastqc:
 
 rule trimmomatic_pe:
   input:
-    r1 = INPUTDIR + "/{sample}_1.fastq.gz",
-    r2 = INPUTDIR + "/{sample}_2.fastq.gz"
+    r1 = INPUTDIR + "/{sample}_" + R1_SUF + SUF,
+    r2 = INPUTDIR + "/{sample}_" + R2_SUF + SUF    
+ #   r1 = INPUTDIR + "/{sample}_1.fastq.gz",
+ #   r2 = INPUTDIR + "/{sample}_2.fastq.gz"
   output:
-    r1 = SCRATCH_PROJ + "/trimmed/{sample}_1_trim.fastq.gz",
-    r2 = SCRATCH_PROJ + "/trimmed/{sample}_2_trim.fastq.gz",
+    r1 = SCRATCH_PROJ + "/trimmed/{sample}_" + R1_SUF + "_trim.fastq.gz",
+    r2 = SCRATCH_PROJ + "/trimmed/{sample}_" + R2_SUF + "_trim.fastq.gz",    
+ #   r1 = SCRATCH_PROJ + "/trimmed/{sample}_1_trim.fastq.gz",
+ #   r2 = SCRATCH_PROJ + "/trimmed/{sample}_2_trim.fastq.gz",
     # reads where trimming entirely removed the mate
     r1_unpaired = SCRATCH_PROJ + "/trimmed/{sample}_1.unpaired.fastq.gz",
     r2_unpaired = SCRATCH_PROJ + "/trimmed/{sample}_2.unpaired.fastq.gz"

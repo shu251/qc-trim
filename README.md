@@ -72,5 +72,55 @@ bash submitscripts/submit-slurm.sh
 
 ```
 
+### Troubleshooting
+
+Sharing my most common errors! yay mistakes and frustrating code!
+
+```
+# My command to run the dry run:
+(snake-qc) [sarahhu@pn072 qc-trim]$ snakemake -np
+
+# Error message
+Building DAG of jobs...
+MissingInputException in line 50 of /vortexfs1/omics/huber/shu/18S-mcr2021-GRcones/qc-trim/Snakefile:
+Missing input files for rule fastqc:
+/vortexfs1/omics/huber/data/18s-midcaymanrise-gordacones-2021-06-28/95_GR_substrate_MC6_Shell_8_5_Jun2021_L001_R2_001.fastq.gz
+```
+
+The first thing I did was migrate to that directory where snakemake was claiming I had a missing sequence. Needed to make sure (1) the script is using the intended wild cards to select the file names and (2) that my raw sequence read directory actually had all of the R1 and R2 files for each sample. In this particular instance, I found out that I was missing the R2 for this sample. 
+
+Note that the first time you execute this Snakemake, it will need to create several new conda environments so it can flip between the ones it needs during the run. Because of this, this is what the first little while will look like when you execute a Snakemake run:
+```
+Building DAG of jobs...
+Creating conda environment https:/bitbucket.org/snakemake/snakemake-wrappers/raw/0.35.2/bio/fastqc/environment.yaml...
+Downloading remote packages.
+Environment for ../../../../../../tmp/tmpay2xbott.yaml created (location: .snakemake/conda/1e45dac1)
+Creating conda environment envs/multiqc-env.yaml...
+Downloading remote packages.
+Environment for envs/multiqc-env.yaml created (location: .snakemake/conda/6b9f0414)
+Creating conda environment https:/bitbucket.org/snakemake/snakemake-wrappers/raw/0.35.2/bio/trimmomatic/pe/environment.yaml...
+Downloading remote packages.
+
+## and so forth...
+
+```
+
+
+
+This is the successful output from the dry run scripts:
+```
+Job counts:
+        count   jobs
+        1       all
+        78      fastqc
+        78      fastqc_trim
+        1       multiqc
+        39      trimmomatic_pe
+        197
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+```
+
+
+
 ***
 _Last updated 8-18-2019_
